@@ -6,7 +6,7 @@
 
 This repository is a code-first learning resource for developers with basic Python knowledge. Numbered examples introduce one concept at a time, while four projects connect those concepts into complete workflows. The lessons and comments are primarily in Chinese. The default provider is Qwen through DashScope, using both the OpenAI-compatible SDK and LangChain.
 
-Maintainer: [DawnVerge](https://github.com/17267626303) · Python 3.11+, recommended 3.12 · LangChain v1 · MIT
+Maintainer: [DawnVerge](https://github.com/DawnVerge) · Python 3.11+, recommended 3.12 · LangChain v1 · MIT
 
 ## Quick start
 
@@ -15,7 +15,7 @@ Clone the repository, then run these commands from its root directory.
 ### Windows / PowerShell
 
 ```powershell
-git clone https://github.com/17267626303/ai-agent-learning.git
+git clone https://github.com/DawnVerge/ai-agent-learning.git
 cd ai-agent-learning
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -32,7 +32,7 @@ If script activation is blocked, use `.\.venv\Scripts\python.exe` instead of `py
 ### macOS / Linux / Bash
 
 ```bash
-git clone https://github.com/17267626303/ai-agent-learning.git
+git clone https://github.com/DawnVerge/ai-agent-learning.git
 cd ai-agent-learning
 python3.12 -m venv .venv
 source .venv/bin/activate

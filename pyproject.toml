@@ -31,8 +31,8 @@ dev = ["ruff>=0.9,<1", "reportlab>=4,<5"]
 ai-learn = "ai_learning.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/17267626303/ai-agent-learning"
-Issues = "https://github.com/17267626303/ai-agent-learning/issues"
+Homepage = "https://github.com/DawnVerge/ai-agent-learning"
+Issues = "https://github.com/DawnVerge/ai-agent-learning/issues"
 
 [tool.setuptools.packages.find]
 include = ["ai_learning*"]

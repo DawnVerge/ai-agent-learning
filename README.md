@@ -4,11 +4,11 @@
 
 [English](README.en.md) · [学习路线](docs/learning-path.md) · [依赖说明](docs/dependencies.md) · [贡献指南](CONTRIBUTING.md)
 
-[![Offline checks](https://github.com/17267626303/ai-agent-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/17267626303/ai-agent-learning/actions/workflows/ci.yml)
+[![Offline checks](https://github.com/DawnVerge/ai-agent-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/DawnVerge/ai-agent-learning/actions/workflows/ci.yml)
 
 本项目适合掌握 Python 基础、希望动手理解大模型应用的学习者。课程保留按编号递进的示例，每个主题先拆解一个概念，再通过客服、PDF 问答和数据库 Agent 把它们串起来。默认使用通义千问与 DashScope，模型调用同时覆盖 OpenAI 兼容 SDK 和 LangChain。
 
-维护者：[DawnVerge](https://github.com/17267626303) · Python 3.11+，推荐 3.12 · LangChain v1 · MIT
+维护者：[DawnVerge](https://github.com/DawnVerge) · Python 3.11+，推荐 3.12 · LangChain v1 · MIT
 
 ## 快速开始
 
@@ -17,7 +17,7 @@
 ### Windows / PowerShell
 
 ```powershell
-git clone https://github.com/17267626303/ai-agent-learning.git
+git clone https://github.com/DawnVerge/ai-agent-learning.git
 cd ai-agent-learning
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -34,7 +34,7 @@ python -m ai_learning run prompts.10
 ### macOS / Linux / Bash
 
 ```bash
-git clone https://github.com/17267626303/ai-agent-learning.git
+git clone https://github.com/DawnVerge/ai-agent-learning.git
 cd ai-agent-learning
 python3.12 -m venv .venv
 source .venv/bin/activate

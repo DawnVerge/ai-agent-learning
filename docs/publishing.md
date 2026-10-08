@@ -1,6 +1,6 @@
 # GitHub 发布与维护
 
-项目仓库：[17267626303/ai-agent-learning](https://github.com/17267626303/ai-agent-learning)。维护者显示名称为 `DawnVerge`，许可证为 MIT。日常维护在已有 checkout 中提交并推送；下面的首次初始化步骤供从零创建独立项目时参考，请勿在已有仓库中重复初始化。
+项目仓库：[DawnVerge/ai-agent-learning](https://github.com/DawnVerge/ai-agent-learning)。维护者显示名称为 `DawnVerge`，许可证为 MIT。日常维护在已有 checkout 中提交并推送；下面的首次初始化步骤供从零创建独立项目时参考，请勿在已有仓库中重复初始化。
 
 ## 发布前检查
 
@@ -25,10 +25,10 @@ gh auth status
 gh api user --jq .login
 ```
 
-输出应为 `17267626303`。若已登录多个账号，可以使用：
+输出应为 `DawnVerge`。若已登录多个账号，可以使用：
 
 ```bash
-gh auth switch --hostname github.com --user 17267626303
+gh auth switch --hostname github.com --user DawnVerge
 ```
 
 尚未登录时使用 `gh auth login --hostname github.com`，完成后重新确认账号。不要把 token 粘贴到文档、聊天记录或提交内容中。
@@ -83,20 +83,20 @@ git log -1 --format=fuller
 下面的命令会创建外部公开仓库并上传文件；只在准备完成、决定公开时执行：
 
 ```bash
-gh repo create 17267626303/ai-agent-learning --public --source . --remote origin --description "Learn AI applications with Python, LangChain, RAG, agents and MCP" --push
+gh repo create DawnVerge/ai-agent-learning --public --source . --remote origin --description "Learn AI applications with Python, LangChain, RAG, agents and MCP" --push
 ```
 
 如果目标仓库已经存在，先检查其内容与本地远程配置，不要重复创建或强制覆盖。确认远程为空且属于当前账号后，可采用：
 
 ```bash
-git remote add origin https://github.com/17267626303/ai-agent-learning.git
+git remote add origin https://github.com/DawnVerge/ai-agent-learning.git
 git push -u origin main
 ```
 
 推送完成后打开仓库：
 
 ```bash
-gh repo view 17267626303/ai-agent-learning --web
+gh repo view DawnVerge/ai-agent-learning --web
 ```
 
 检查首页、相对文档链接、许可证和 Actions 结果。日常维护使用 `git add`、`git commit` 与 `git push`；不要重复创建远程仓库。
