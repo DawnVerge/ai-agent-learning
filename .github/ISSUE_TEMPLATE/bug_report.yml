@@ -1,0 +1,17 @@
+name: Bug report / 问题反馈
+description: Report a lesson or project that does not work as documented.
+body:
+  - type: input
+    id: example
+    attributes:
+      label: Example ID / 示例编号
+      placeholder: rag.02
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps, expected result and actual result / 复现过程
+      description: Include Python version and the command. Remove API keys, passwords and private data.
+    validations:
+      required: true

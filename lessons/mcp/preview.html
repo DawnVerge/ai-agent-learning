@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCP Server 工具查看器</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: rgba(255, 255, 255, 0.94);
+      --text: #172033;
+      --muted: #667085;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --border: #dbe3ef;
+      --success: #138a55;
+      --error: #c53929;
+      --code-bg: #0f172a;
+      --code-text: #dbeafe;
+      --shadow: 0 22px 60px rgba(24, 39, 75, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(124, 58, 237, 0.12), transparent 28%),
+        var(--bg);
+      padding: 48px 20px;
+    }
+
+    .container {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: rgba(37, 99, 235, 0.1);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.12);
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(219, 227, 239, 0.9);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .panel-body {
+      padding: 28px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 15px;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    input:focus {
+      border-color: rgba(37, 99, 235, 0.8);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    button {
+      min-width: 240px;
+      height: 50px;
+      border: none;
+      border-radius: 14px;
+      padding: 0 22px;
+      color: #fff;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(37, 99, 235, 0.32);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      min-height: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+
+    .status.loading .status-dot {
+      background: #f59e0b;
+      animation: pulse 1s infinite ease-in-out;
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .status.success .status-dot {
+      background: var(--success);
+    }
+
+    .status.error {
+      color: var(--error);
+    }
+
+    .status.error .status-dot {
+      background: var(--error);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.35; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .result-title {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: rgba(37, 99, 235, 0.1);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tool-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .tool-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(248, 250, 252, 0.8);
+    }
+
+    .tool-name {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      word-break: break-word;
+    }
+
+    .tool-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .code-box {
+      min-height: 260px;
+      max-height: 520px;
+      overflow: auto;
+      margin: 0;
+      padding: 20px;
+      border-radius: 16px;
+      color: var(--code-text);
+      background: var(--code-bg);
+      font-family:
+        "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tip {
+      margin-top: 18px;
+      padding: 15px 16px;
+      border: 1px solid #f3d58c;
+      border-radius: 14px;
+      color: #7c5314;
+      background: #fff8e8;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 28px 14px;
+      }
+
+      .panel-body {
+        padding: 20px;
+      }
+
+      .input-row {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        MCP Streamable HTTP Client
+      </div>
+
+      <h1>查看 MCP Server 有哪些工具</h1>
+
+      <p class="subtitle">
+        点击按钮后，页面会依次发送
+        <strong>initialize</strong>、
+        <strong>notifications/initialized</strong>
+        和 <strong>tools/list</strong> 请求，并展示服务端返回的工具列表和原始响应。
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-body">
+        <label class="field-label" for="serverUrl">MCP Server Endpoint</label>
+
+        <div class="input-row">
+          <input
+            id="serverUrl"
+            type="url"
+            value="http://127.0.0.1:8000/mcp"
+            spellcheck="false"
+          />
+
+          <button id="listToolsButton" type="button">
+            查看 MCP Server 有哪些工具
+          </button>
+        </div>
+
+        <div id="status" class="status">
+          <span class="status-dot"></span>
+          <span id="statusText">等待发起请求</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="result-header">
+          <h2 class="result-title">工具列表</h2>
+          <span id="toolCount" class="count">0</span>
+        </div>
+
+        <div id="toolList" class="tool-list"></div>
+
+        <div class="result-header">
+          <h2 class="result-title">原始响应</h2>
+        </div>
+
+        <pre id="rawResponse" class="code-box">尚未发起请求。</pre>
+
+        <div class="tip">
+          浏览器会执行 CORS 检查。如果控制台出现
+          <code>CORS policy</code>、<code>Failed to fetch</code>
+          或预检请求失败，需要让 MCP Server 或反向代理允许当前页面来源。
+          直接通过 <code>file://</code> 打开时，浏览器的 Origin 通常是
+          <code>null</code>。更稳妥的方式是在该 HTML 所在目录运行
+          <code>python -m http.server 3000</code>，然后访问
+          <code>http://127.0.0.1:3000/</code>。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const button = document.getElementById("listToolsButton");
+    const serverUrlInput = document.getElementById("serverUrl");
+    const status = document.getElementById("status");
+    const statusText = document.getElementById("statusText");
+    const toolList = document.getElementById("toolList");
+    const toolCount = document.getElementById("toolCount");
+    const rawResponse = document.getElementById("rawResponse");
+
+    let requestId = 1;
+    let protocolVersion = "2025-06-18";
+    let sessionId = null;
+
+    function setStatus(type, text) {
+      status.className = `status ${type ?? ""}`.trim();
+      statusText.textContent = text;
+    }
+
+    function parseSseBlock(block) {
+      const dataLines = [];
+      let eventName = "message";
+      let eventId = null;
+
+      for (const line of block.split(/\r?\n/)) {
+        if (!line || line.startsWith(":")) continue;
+
+        const colonIndex = line.indexOf(":");
+        const field =
+          colonIndex === -1 ? line : line.slice(0, colonIndex);
+
+        let value =
+          colonIndex === -1 ? "" : line.slice(colonIndex + 1);
+
+        if (value.startsWith(" ")) value = value.slice(1);
+
+        if (field === "event") eventName = value;
+        if (field === "id") eventId = value;
+        if (field === "data") dataLines.push(value);
+      }
+
+      const data = dataLines.join("\n");
+      let json = null;
+
+      if (data) {
+        try {
+          json = JSON.parse(data);
+        } catch {
+          // 保留非 JSON 文本。
+        }
+      }
+
+      return {
+        event: eventName,
+        id: eventId,
+        data,
+        json,
+      };
+    }
+
+    async function readSseResponse(response) {
+      if (!response.body) {
+        throw new Error("服务器返回了 SSE，但响应体为空。");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      const events = [];
+      let buffer = "";
+
+      while (true) {
+        const { value, done } = await reader.read();
+
+        if (value) {
+          buffer += decoder.decode(value, { stream: !done });
+        }
+
+        while (true) {
+          const delimiter = buffer.match(/\r?\n\r?\n/);
+
+          if (!delimiter || delimiter.index === undefined) {
+            break;
+          }
+
+          const block = buffer.slice(0, delimiter.index);
+          buffer = buffer.slice(
+            delimiter.index + delimiter[0].length
+          );
+
+          if (!block.trim()) continue;
+
+          events.push(parseSseBlock(block));
+        }
+
+        if (done) break;
+      }
+
+      if (buffer.trim()) {
+        events.push(parseSseBlock(buffer));
+      }
+
+      return events;
+    }
+
+    async function sendMcpMessage(
+      url,
+      message,
+      { includeProtocolHeader = true } = {}
+    ) {
+      const headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json, text/event-stream",
+      };
+
+      if (includeProtocolHeader && protocolVersion) {
+        headers["MCP-Protocol-Version"] = protocolVersion;
+      }
+
+      if (sessionId) {
+        headers["MCP-Session-Id"] = sessionId;
+      }
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(message),
+      });
+
+      const returnedSessionId =
+        response.headers.get("mcp-session-id");
+
+      if (returnedSessionId) {
+        sessionId = returnedSessionId;
+      }
+
+      if (response.status === 202) {
+        return {
+          status: response.status,
+          contentType:
+            response.headers.get("content-type") ?? "",
+          messages: [],
+        };
+      }
+
+      if (!response.ok) {
+        const errorBody = await response.text();
+
+        throw new Error(
+          `HTTP ${response.status} ${response.statusText}\n${errorBody}`
+        );
+      }
+
+      const contentType =
+        response.headers.get("content-type") ?? "";
+
+      if (contentType.includes("text/event-stream")) {
+        const events = await readSseResponse(response);
+
+        return {
+          status: response.status,
+          contentType,
+          events,
+          messages: events
+            .map((event) => event.json)
+            .filter((message) => message !== null),
+        };
+      }
+
+      if (contentType.includes("application/json")) {
+        const json = await response.json();
+
+        return {
+          status: response.status,
+          contentType,
+          messages: [json],
+        };
+      }
+
+      const text = await response.text();
+
+      throw new Error(
+        `无法识别的响应类型：${contentType || "未知"}\n${text}`
+      );
+    }
+
+    function findResponse(messages, id) {
+      return messages.find(
+        (message) =>
+          message &&
+          Object.prototype.hasOwnProperty.call(message, "id") &&
+          message.id === id
+      );
+    }
+
+    function renderTools(tools) {
+      toolList.innerHTML = "";
+      toolCount.textContent = String(tools.length);
+
+      if (tools.length === 0) {
+        toolList.innerHTML = `
+          <div class="tool-card">
+            <h3 class="tool-name">没有发现工具</h3>
+            <p class="tool-desc">
+              Server 正常响应了 tools/list，但工具列表为空。
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      for (const tool of tools) {
+        const card = document.createElement("article");
+        card.className = "tool-card";
+
+        const name = document.createElement("h3");
+        name.className = "tool-name";
+        name.textContent = tool.name ?? "未命名工具";
+
+        const description = document.createElement("p");
+        description.className = "tool-desc";
+        description.textContent =
+          tool.description || "该工具没有提供 description。";
+
+        card.appendChild(name);
+        card.appendChild(description);
+        toolList.appendChild(card);
+      }
+    }
+
+    async function listTools() {
+      const url = serverUrlInput.value.trim();
+
+      if (!url) {
+        setStatus("error", "请输入 MCP Server 地址");
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "正在请求 MCP Server…";
+      setStatus("loading", "正在完成 MCP 初始化");
+      toolList.innerHTML = "";
+      toolCount.textContent = "0";
+      rawResponse.textContent = "正在请求…";
+
+      const allResponses = [];
+
+      try {
+        const initializeId = requestId++;
+
+        const initializeResult = await sendMcpMessage(
+          url,
+          {
+            jsonrpc: "2.0",
+            id: initializeId,
+            method: "initialize",
+            params: {
+              protocolVersion,
+              capabilities: {},
+              clientInfo: {
+                name: "mcp-browser-tool-viewer",
+                version: "1.0.0",
+              },
+            },
+          },
+          {
+            includeProtocolHeader: false,
+          }
+        );
+
+        allResponses.push({
+          step: "initialize",
+          ...initializeResult,
+        });
+
+        const initializeResponse = findResponse(
+          initializeResult.messages,
+          initializeId
+        );
+
+        if (!initializeResponse) {
+          throw new Error(
+            "没有收到 initialize 对应的 JSON-RPC Response。"
+          );
+        }
+
+        if (initializeResponse.error) {
+          throw new Error(
+            `initialize 失败：${JSON.stringify(
+              initializeResponse.error,
+              null,
+              2
+            )}`
+          );
+        }
+
+        protocolVersion =
+          initializeResponse.result?.protocolVersion ??
+          protocolVersion;
+
+        setStatus("loading", "正在发送 initialized notification");
+
+        const initializedResult = await sendMcpMessage(url, {
+          jsonrpc: "2.0",
+          method: "notifications/initialized",
+          params: {},
+        });
+
+        allResponses.push({
+          step: "notifications/initialized",
+          ...initializedResult,
+        });
+
+        setStatus("loading", "正在请求 tools/list");
+
+        const toolsListId = requestId++;
+
+        const toolsResult = await sendMcpMessage(url, {
+          jsonrpc: "2.0",
+          id: toolsListId,
+          method: "tools/list",
+          params: {},
+        });
+
+        allResponses.push({
+          step: "tools/list",
+          ...toolsResult,
+        });
+
+        const toolsResponse = findResponse(
+          toolsResult.messages,
+          toolsListId
+        );
+
+        if (!toolsResponse) {
+          throw new Error(
+            "没有收到 tools/list 对应的 JSON-RPC Response。"
+          );
+        }
+
+        if (toolsResponse.error) {
+          throw new Error(
+            `tools/list 失败：${JSON.stringify(
+              toolsResponse.error,
+              null,
+              2
+            )}`
+          );
+        }
+
+        const tools = toolsResponse.result?.tools ?? [];
+
+        renderTools(tools);
+
+        rawResponse.textContent = JSON.stringify(
+          {
+            negotiatedProtocolVersion: protocolVersion,
+            sessionId,
+            responses: allResponses,
+          },
+          null,
+          2
+        );
+
+        setStatus(
+          "success",
+          `请求成功，共发现 ${tools.length} 个工具`
+        );
+      } catch (error) {
+        console.error(error);
+
+        const message =
+          error instanceof Error ? error.message : String(error);
+
+        setStatus("error", "请求失败，请查看下方错误信息");
+        rawResponse.textContent =
+          `${message}\n\n` +
+          `常见原因：\n` +
+          `1. MCP Server 尚未启动；\n` +
+          `2. Endpoint 地址不正确；\n` +
+          `3. 浏览器 CORS 或 Origin 校验失败；\n` +
+          `4. Server 不支持当前 MCP 协议版本；\n` +
+          `5. 页面通过 file:// 打开，Server 不允许 Origin: null。`;
+      } finally {
+        button.disabled = false;
+        button.textContent = "查看 MCP Server 有哪些工具";
+      }
+    }
+
+    button.addEventListener("click", listTools);
+  </script>
+</body>
+</html>

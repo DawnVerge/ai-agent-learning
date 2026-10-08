@@ -1,0 +1,36 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python and build products
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated indexes, conversation histories and protocol logs
+.cache/
+chroma_db/
+chroma_data/
+temp/
+*.log
+chat_history*.json
+message_history*.json
+*_messages.json
+.ipynb_checkpoints/
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,706 @@
+[
+  {
+    "id": "model-api.01",
+    "title": "调用大模型",
+    "path": "lessons/model_api/1_调用大模型.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.02",
+    "title": "测试大模型记忆",
+    "path": "lessons/model_api/2_测试大模型记忆.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.03",
+    "title": "让大模型有记忆",
+    "path": "lessons/model_api/3_让大模型有记忆.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.04",
+    "title": "测试系统提示词",
+    "path": "lessons/model_api/4_测试系统提示词.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.05",
+    "title": "实现多轮对话",
+    "path": "lessons/model_api/5_实现多轮对话.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.06",
+    "title": "流式输出",
+    "path": "lessons/model_api/6_流式输出.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.07",
+    "title": "获取token使用量",
+    "path": "lessons/model_api/7_获取token使用量.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "model-api.08",
+    "title": "流式输出多轮对话",
+    "path": "lessons/model_api/8_流式输出多轮对话.py",
+    "workdir": "lessons/model_api",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.01",
+    "title": "和狭义大模型对接",
+    "path": "lessons/langchain_basics/1_和狭义大模型对接.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.02",
+    "title": "和狭义大模型对接 流式输出",
+    "path": "lessons/langchain_basics/2_和狭义大模型对接_流式输出.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.03",
+    "title": "和聊天模型对接",
+    "path": "lessons/langchain_basics/3_和聊天模型对接.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.04",
+    "title": "和聊天模型对接 流式输出",
+    "path": "lessons/langchain_basics/4_和聊天模型对接_流式输出.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.05",
+    "title": "消息类型简写",
+    "path": "lessons/langchain_basics/5_消息类型简写.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.06",
+    "title": "实现对论对话",
+    "path": "lessons/langchain_basics/6_实现对论对话.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.07",
+    "title": "向量模型",
+    "path": "lessons/langchain_basics/7_向量模型.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "langchain.08",
+    "title": "向量模型 相似度判断",
+    "path": "lessons/langchain_basics/8_向量模型_相似度判断.py",
+    "workdir": "lessons/langchain_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.01",
+    "title": "解释机器学习",
+    "path": "lessons/prompts/1_解释机器学习.py",
+    "workdir": "lessons/prompts",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.02",
+    "title": "提示词引入",
+    "path": "lessons/prompts/2_提示词引入.py",
+    "workdir": "lessons/prompts",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.03",
+    "title": "提示词模板引入",
+    "path": "lessons/prompts/3_提示词模板引入.py",
+    "workdir": "lessons/prompts",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.04",
+    "title": "提示词模板 LCEL",
+    "path": "lessons/prompts/4_提示词模板_LCEL.py",
+    "workdir": "lessons/prompts",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.05",
+    "title": "fewshotprompttemplate",
+    "path": "lessons/prompts/5_fewshotprompttemplate.py",
+    "workdir": "lessons/prompts",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.06",
+    "title": "chatprompttemplate",
+    "path": "lessons/prompts/6_chatprompttemplate.py",
+    "workdir": "lessons/prompts",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.07",
+    "title": "传递上下文内容",
+    "path": "lessons/prompts/7_传递上下文内容.py",
+    "workdir": "lessons/prompts",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.08",
+    "title": "字符串输出解析器",
+    "path": "lessons/prompts/8_字符串输出解析器.py",
+    "workdir": "lessons/prompts",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.09",
+    "title": "json输出解析器",
+    "path": "lessons/prompts/9_json输出解析器.py",
+    "workdir": "lessons/prompts",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "prompts.10",
+    "title": "手写LCEL",
+    "path": "lessons/prompts/10_手写LCEL.py",
+    "workdir": "lessons/prompts",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "history.01",
+    "title": "inmemorychatmessagehistory",
+    "path": "lessons/chat_memory/history/1_inmemorychatmessagehistory.py",
+    "workdir": "lessons/chat_memory/history",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "history.02",
+    "title": "会话隔离的简单实现",
+    "path": "lessons/chat_memory/history/2_会话隔离的简单实现.py",
+    "workdir": "lessons/chat_memory/history",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "history.03",
+    "title": "文件保存所有的消息列表",
+    "path": "lessons/chat_memory/history/3_文件保存所有的消息列表.py",
+    "workdir": "lessons/chat_memory/history",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "history.04",
+    "title": "实现多轮对话",
+    "path": "lessons/chat_memory/history/4_实现多轮对话.py",
+    "workdir": "lessons/chat_memory/history",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "memory.01",
+    "title": "大模型记忆测试",
+    "path": "lessons/chat_memory/documents/1_大模型记忆测试.py",
+    "workdir": "lessons/chat_memory/documents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "memory.02",
+    "title": "给大模型添加记忆",
+    "path": "lessons/chat_memory/documents/2_给大模型添加记忆.py",
+    "workdir": "lessons/chat_memory/documents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "memory.03",
+    "title": "pdf内容加载",
+    "path": "lessons/chat_memory/documents/3_pdf内容加载.py",
+    "workdir": "lessons/chat_memory/documents",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "memory.04",
+    "title": "txt内容加载",
+    "path": "lessons/chat_memory/documents/4_txt内容加载.py",
+    "workdir": "lessons/chat_memory/documents",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "memory.05",
+    "title": "向量化",
+    "path": "lessons/chat_memory/documents/5_向量化.py",
+    "workdir": "lessons/chat_memory/documents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "rag.01",
+    "title": "Document对象",
+    "path": "lessons/rag_basics/1_Document对象.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.02",
+    "title": "PyMuPDFLoader",
+    "path": "lessons/rag_basics/2_PyMuPDFLoader.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.03",
+    "title": "TextLoader",
+    "path": "lessons/rag_basics/3_TextLoader.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.04",
+    "title": "WebBaseLoader",
+    "path": "lessons/rag_basics/4_WebBaseLoader.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.05",
+    "title": "字符文本分割器",
+    "path": "lessons/rag_basics/5_字符文本分割器.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.06",
+    "title": "递归字符文本分割器",
+    "path": "lessons/rag_basics/6_递归字符文本分割器.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.07",
+    "title": "正则表达式切分",
+    "path": "lessons/rag_basics/7_正则表达式切分.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.08",
+    "title": "overlap",
+    "path": "lessons/rag_basics/8_overlap.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.09",
+    "title": "嵌入模型",
+    "path": "lessons/rag_basics/9_嵌入模型.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.10",
+    "title": "嵌入模型 批量",
+    "path": "lessons/rag_basics/10_嵌入模型_批量.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.11",
+    "title": "语义相似度测试",
+    "path": "lessons/rag_basics/11_语义相似度测试.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.12",
+    "title": "chromadb的使用",
+    "path": "lessons/rag_basics/12_chromadb的使用.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.13",
+    "title": "MMR场景引入",
+    "path": "lessons/rag_basics/13_MMR场景引入.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "rag.14",
+    "title": "MMR",
+    "path": "lessons/rag_basics/14_MMR.py",
+    "workdir": "lessons/rag_basics",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "hybrid.01",
+    "title": "欧式距离的计算",
+    "path": "lessons/hybrid_search/1_欧式距离的计算.py",
+    "workdir": "lessons/hybrid_search",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "hybrid.02",
+    "title": "ChromaDB中使用欧氏距离",
+    "path": "lessons/hybrid_search/2_ChromaDB中使用欧氏距离.py",
+    "workdir": "lessons/hybrid_search",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "hybrid.03",
+    "title": "余弦相似度的计算",
+    "path": "lessons/hybrid_search/3_余弦相似度的计算.py",
+    "workdir": "lessons/hybrid_search",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "hybrid.04",
+    "title": "ChromaDB中使用余弦相似度",
+    "path": "lessons/hybrid_search/4_ChromaDB中使用余弦相似度.py",
+    "workdir": "lessons/hybrid_search",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "hybrid.05",
+    "title": "hybrid search 引入",
+    "path": "lessons/hybrid_search/5_hybrid_search_引入.py",
+    "workdir": "lessons/hybrid_search",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "hybrid.06",
+    "title": "混合搜索",
+    "path": "lessons/hybrid_search/6_混合搜索.py",
+    "workdir": "lessons/hybrid_search",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "rag"
+  },
+  {
+    "id": "agents.01",
+    "title": "LLM的缺陷",
+    "path": "lessons/agents/1_LLM的缺陷.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "agents.02",
+    "title": "给模型添加工具",
+    "path": "lessons/agents/2_给模型添加工具.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "agents.03",
+    "title": "提供多个工具",
+    "path": "lessons/agents/3_提供多个工具.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "agents.04",
+    "title": "快速创建一个Agent",
+    "path": "lessons/agents/4_快速创建一个Agent.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "agents.05",
+    "title": "发生异常怎么办",
+    "path": "lessons/agents/5_发生异常怎么办.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "agents.06",
+    "title": "重试逻辑",
+    "path": "lessons/agents/6_重试逻辑.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "agents.07",
+    "title": "Agent多工具调用",
+    "path": "lessons/agents/7_Agent多工具调用.py",
+    "workdir": "lessons/agents",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "extra": "base"
+  },
+  {
+    "id": "mcp.weather",
+    "title": "天气 MCP 服务（模拟数据，stdio）",
+    "path": "lessons/mcp/weather.py",
+    "workdir": "lessons/mcp",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "server": true,
+    "extra": "mcp",
+    "accepts_arguments": false
+  },
+  {
+    "id": "mcp.http",
+    "title": "Streamable HTTP MCP 服务",
+    "path": "lessons/mcp/Streamable_HTTP_01.py",
+    "workdir": "lessons/mcp",
+    "api_key": false,
+    "network": false,
+    "mysql": false,
+    "server": true,
+    "extra": "mcp",
+    "accepts_arguments": false
+  },
+  {
+    "id": "mcp.client",
+    "title": "LangChain 连接天气 MCP",
+    "path": "lessons/mcp/2_LangChain连接MCP_Server.py",
+    "workdir": "lessons/mcp",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "server": false,
+    "extra": "mcp",
+    "accepts_arguments": false
+  },
+  {
+    "id": "project.chat",
+    "title": "灵语客服：意图与记忆",
+    "path": "projects/lingyu_chat/cli.py",
+    "workdir": "projects/lingyu_chat",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "server": false,
+    "extra": "base",
+    "accepts_arguments": true
+  },
+  {
+    "id": "project.pdf-qa",
+    "title": "PDF 文档多轮问答",
+    "path": "projects/smart_reading/cli.py",
+    "workdir": "projects/smart_reading",
+    "api_key": true,
+    "network": true,
+    "mysql": false,
+    "server": false,
+    "extra": "rag",
+    "accepts_arguments": true
+  },
+  {
+    "id": "project.text-to-sql",
+    "title": "自然语言查询 MySQL",
+    "path": "projects/text_to_sql/db_tools.py",
+    "workdir": "projects/text_to_sql",
+    "api_key": true,
+    "network": true,
+    "mysql": true,
+    "server": false,
+    "extra": "sql",
+    "accepts_arguments": false
+  },
+  {
+    "id": "project.database-mcp",
+    "title": "数据库 MCP Agent",
+    "path": "projects/database_mcp/client.py",
+    "workdir": "projects/database_mcp",
+    "api_key": true,
+    "network": true,
+    "mysql": true,
+    "server": false,
+    "extra": "mcp,sql",
+    "accepts_arguments": false
+  }
+]
