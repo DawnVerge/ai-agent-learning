@@ -97,7 +97,7 @@ python -m ai_learning check
 
 | 项目 | 运行入口 | 串联的能力 |
 | --- | --- | --- |
-| [灵语客服](projects/lingyu_chat) | `python -m ai_learning run project.chat` | 意图识别、提示词路由、会话历史、摘要和关键事实 |
+| [RAG客服](projects/lingyu_chat) | `python -m ai_learning run project.chat` | 意图识别、提示词路由、会话历史、摘要和关键事实 |
 | [PDF 智能阅读](projects/smart_reading) | `python -m ai_learning run project.pdf-qa -- --question "这份文档介绍了什么？"` | 文档索引、问题改写、召回、模型重排、带页码的回答 |
 | [Text-to-SQL](projects/text_to_sql) | `python -m ai_learning run project.text-to-sql` | 数据库结构查询、SQL 工具、自然语言查询 |
 | [数据库 MCP](projects/database_mcp) | `python -m ai_learning run project.database-mcp` | 将数据库能力封装为 MCP 工具并交给 Agent 调用 |
