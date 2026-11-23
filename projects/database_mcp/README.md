@@ -7,7 +7,7 @@
 | client.py | 自然语言查询客户端 |
 | mcp_db_server.py | stdio 服务入口 |
 | mcp_tools.py | 表名、表结构、只读查询、释放连接池工具和查询提示词 |
-| db_manager.py | 环境配置、元数据读取、受限 SQL 与只读事务 |
+| db_manager.py | 复用 Text-to-SQL 的连接、元数据读取、受限 SQL 和只读事务 |
 | mcp_proxy.py | 可选的协议转发和本地日志示例 |
 
 ## 准备与运行

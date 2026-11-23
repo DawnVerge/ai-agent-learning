@@ -10,15 +10,15 @@ def main():
     args = parser.parse_args()
     from ai_learning.config import get_api_key, load_environment
     load_environment()
-    get_api_key()
-    from chat_service import ChatService
-    from core.protocol import ChatRequest
+    api_key = get_api_key()
+    from projects.lingyu_chat.chat_service import ChatService
+    from projects.lingyu_chat.core.protocol import ChatRequest
     from uuid import uuid4
 
-    service = ChatService()
+    service = ChatService(api_key=api_key)
 
     def ask(message):
-        response = service.handle(ChatRequest(user_id="learner", chat_session_id=args.session,
+        response = service.handle(ChatRequest(api_key=api_key, user_id="learner", chat_session_id=args.session,
                                              user_input=message, trace_id=str(uuid4())))
         print(response.response)
 

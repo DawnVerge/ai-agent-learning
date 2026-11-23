@@ -4,6 +4,8 @@ import importlib
 import unittest
 from unittest.mock import MagicMock, patch
 
+from projects.text_to_sql import db_manager as shared_db_manager
+
 
 MODULES = (
     "projects.text_to_sql.db_manager",
@@ -12,6 +14,11 @@ MODULES = (
 
 
 class DatabaseTests(unittest.TestCase):
+    def test_mcp_reuses_text_to_sql_database_layer(self):
+        mcp_db_manager = importlib.import_module("projects.database_mcp.db_manager")
+        self.assertIs(mcp_db_manager.DBManager, shared_db_manager.DBManager)
+        self.assertIs(mcp_db_manager.validate_readonly_sql, shared_db_manager.validate_readonly_sql)
+
     def test_allowed_single_queries(self):
         queries = (
             "SELECT 1",
@@ -56,7 +63,7 @@ class DatabaseTests(unittest.TestCase):
         for name in MODULES:
             module = importlib.import_module(name)
             manager = module.DBManager("demo", "unit-test-value", "demo")
-            with patch.object(module, "create_engine") as create_engine:
+            with patch.object(shared_db_manager, "create_engine") as create_engine:
                 with self.assertRaises(ValueError):
                     manager.execute_query("DROP TABLE products")
                 create_engine.assert_not_called()
@@ -65,7 +72,7 @@ class DatabaseTests(unittest.TestCase):
         for name in MODULES:
             module = importlib.import_module(name)
             manager = module.DBManager("demo", "test@:/# value", "demo")
-            with patch.object(module, "create_engine") as create_engine:
+            with patch.object(shared_db_manager, "create_engine") as create_engine:
                 manager._get_engine()
                 url = create_engine.call_args.args[0]
                 self.assertEqual(url.password, "test@:/# value")

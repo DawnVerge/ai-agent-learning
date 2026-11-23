@@ -2,7 +2,7 @@
 
 from mcp.server.fastmcp import FastMCP
 
-from db_manager import DBManager
+from projects.database_mcp.db_manager import DBManager
 
 
 mcp = FastMCP("database")

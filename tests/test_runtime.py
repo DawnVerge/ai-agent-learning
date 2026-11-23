@@ -2,12 +2,14 @@ import contextlib
 import io
 import json
 import os
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 from ai_learning.cli import main
+from ai_learning._runner import main as run_example
 from ai_learning.config import PROJECT_ROOT, get_api_key, load_environment, mysql_settings
 from ai_learning.validation import check_repository
 
@@ -62,6 +64,19 @@ class RepositoryTests(unittest.TestCase):
         with patch("ai_learning.cli.subprocess.run") as run, contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(main(["run", "model-api.01", "--", "--help"]), 0)
             run.assert_not_called()
+
+    def test_runner_suggests_installing_the_selected_dependency_groups(self):
+        argv = ["_runner", "projects/database_mcp/client.py", "projects/database_mcp", "mcp,sql"]
+        missing = ModuleNotFoundError("missing dependency", name="langchain_mcp_adapters")
+        with (
+            patch.object(sys, "argv", argv),
+            patch("ai_learning._runner.os.chdir"),
+            patch("ai_learning._runner.load_environment"),
+            patch("ai_learning._runner.runpy.run_path", side_effect=missing),
+            patch.object(sys, "path", sys.path.copy()),
+        ):
+            with self.assertRaisesRegex(SystemExit, r'langchain_mcp_adapters.*pip install -e "\.\[mcp,sql\]"'):
+                run_example()
 
 
 if __name__ == "__main__":

@@ -77,8 +77,11 @@ def main(argv: list[str] | None = None) -> int:
                 get_api_key()
             if item["mysql"]:
                 mysql_settings()
-        result = subprocess.run([sys.executable, "-m", "ai_learning._runner", item["path"], item["workdir"], *arguments],
-                                cwd=PROJECT_ROOT, check=False)
+        result = subprocess.run(
+            [sys.executable, "-m", "ai_learning._runner", item["path"], item["workdir"], item["extra"], *arguments],
+            cwd=PROJECT_ROOT,
+            check=False,
+        )
         return result.returncode
     except (ValueError, OSError) as error:
         print(f"Configuration error: {error}", file=sys.stderr)

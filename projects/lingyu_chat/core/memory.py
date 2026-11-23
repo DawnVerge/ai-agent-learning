@@ -2,7 +2,7 @@ from typing import Dict, List
 from langchain_core.messages import BaseMessage, AIMessage, HumanMessage
 
 from .chat_history_manager import ChatHistoryManager
-from .summary_manager import SummaryManager
+from .summary_manager import RECENT_WINDOW, SummaryManager
 from .facts_manager import FactManager
 
 # 会话Key前缀
@@ -70,27 +70,13 @@ class Memory:
         if not self.summary.should_trigger_summary():
             return
 
-        history = self.history.get_history()
-        if not history:
-            return
-
-        messages = history.messages
-        unsummarized_count = self.summary.get_unsummarized_count()
-        total_count = len(messages)
-        summarized_count = total_count - unsummarized_count
-
-        # 获取未摘要的消息
-        new_messages = messages[summarized_count:]
-        if new_messages:
-            old_summary = self.summary.get_summary()
-            new_summary = self.summary.generate_incremental_summary(
-                old_summary,
-                new_messages,
-                llm
-            )
-            self.summary.update_summary(new_summary)
-            self.summary.reset_unsummarized_count()
-            print("摘要生成")
+        messages = self.history.get_messages()
+        new_messages = messages[-self.summary.get_unsummarized_count():]
+        new_summary = self.summary.generate_incremental_summary(self.summary.get_summary(), new_messages, llm)
+        self.summary.update_summary(new_summary)
+        self.summary.reset_unsummarized_count()
+        # 意图识别仍需要最近的原话，下一次摘要只处理这之后写入的消息。
+        del messages[:-RECENT_WINDOW]
 
     # ========== 准备LLM上下文 ==========
     def prepare_memory_for_llm(self) -> List[BaseMessage]:
@@ -110,10 +96,6 @@ class Memory:
 
         # 3. 添加最近未摘要的消息
         unsummarized_count = self.summary.get_unsummarized_count()
-        if unsummarized_count > 0:
-            # 看如何设计了~
-            messages = self.history.get_messages()
-            recent_messages = messages[-unsummarized_count:]
-            result.extend(recent_messages)
+        result.extend(self.history.get_recent_messages(unsummarized_count))
 
         return result

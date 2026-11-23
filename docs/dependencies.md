@@ -35,6 +35,7 @@ MCP 示例使用 **SDK v1 的 FastMCP 接口**：`from mcp.server.fastmcp import
 | `PyMuPDF` | PDF 加载器的实际解析后端 |
 | `beautifulsoup4`、`requests` | 网页解析与 HTTP 获取 |
 | `langchain-chroma`、`langchain-text-splitters` | 向量存储与文档切分 |
+| `filelock` | 避免多个进程同时构建同一份 PDF 索引 |
 | `mcp`、`langchain-mcp-adapters` | MCP 服务、连接与工具转换 |
 | `SQLAlchemy`、`PyMySQL` | 数据库访问与 `mysql+pymysql` 驱动 |
 | `pydantic` | 结构化输出的 schema |
@@ -51,6 +52,8 @@ python -m unittest discover -s tests -v
 ```
 
 `doctor` 检查环境准备情况，`pip check` 检查已安装包的依赖约束。后两项用于离线验证仓库，不会自动调用模型、下载远程文档或连接 MySQL。
+
+`python -m ai_learning run <id>` 遇到缺少 Python 模块时会提示该条目对应的安装命令。
 
 环境变量模板见 [.env.example](../.env.example)。项目使用标准库读取 `.env` 的 `KEY=value` 配置，保留已设置的 shell 环境变量，不执行命令或变量插值。在线示例需要 `DASHSCOPE_API_KEY`；默认模型由 `DASHSCOPE_MODEL` 控制。`OPENAI_BASE_URL` 用于 OpenAI 兼容 SDK 的地址配置，`ChatTongyi` 使用 DashScope SDK，不会自动跟随此变量切换服务商。
 

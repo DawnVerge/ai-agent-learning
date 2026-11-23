@@ -7,7 +7,7 @@ from langchain_community.chat_models import ChatTongyi
 from langchain_core.tools import tool
 
 from ai_learning.config import get_api_key
-from db_manager import DBManager
+from projects.text_to_sql.db_manager import DBManager
 
 
 SYSTEM_PROMPT = """你是数据库查询助手。

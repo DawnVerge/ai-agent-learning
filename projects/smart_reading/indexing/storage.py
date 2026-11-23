@@ -1,22 +1,20 @@
-# indexing/storage.py
-"""
-PDF文件存储与哈希计算模块
-"""
+"""Load and fingerprint the same PDF bytes for indexing."""
+
 import hashlib
-import logging
+from pathlib import Path
+from urllib.parse import urlparse
+
+import requests
 
 
 class PdfBytesStore:
-    """根据文件内容计算文件 hash"""
+    def read(self, source: str) -> bytes:
+        parsed = urlparse(source)
+        if parsed.scheme in {"http", "https"} and parsed.netloc:
+            response = requests.get(source, timeout=30)
+            response.raise_for_status()
+            return response.content
+        return Path(source).read_bytes()
 
     def compute_hash(self, pdf_bytes: bytes) -> str:
-        """从字节数据计算 MD5 哈希值"""
-        return hashlib.md5(pdf_bytes).hexdigest()
-
-    def compute_hash_from_file(self, file_path: str) -> str:
-        """从文件路径计算 MD5 哈希值（流式读取）"""
-        hash_md5 = hashlib.md5()
-        with open(file_path, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hash_md5.update(chunk)
-        return hash_md5.hexdigest()
+        return hashlib.sha256(pdf_bytes).hexdigest()

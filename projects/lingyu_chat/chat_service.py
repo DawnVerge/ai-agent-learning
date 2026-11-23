@@ -1,21 +1,21 @@
+import logging
+import time
+from collections import OrderedDict
+
 from langchain_community.chat_models import ChatTongyi
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables import RunnableLambda
-from core.protocol import *
-
-from config import *
-from core.intent_recognizer import IntentRecognizer
-from core.memory import Memory
-
-import time
-import os
-import logging
+from ai_learning.config import get_api_key
+from projects.lingyu_chat.config import INTENT_RECOGNIZE_MODEL, TONGYI_MODEL
+from projects.lingyu_chat.core.intent_recognizer import IntentRecognizer
+from projects.lingyu_chat.core.memory import Memory
+from projects.lingyu_chat.core.protocol import ChatRequest, ChatResponse
+from projects.lingyu_chat.core.summary_manager import RECENT_WINDOW
 
 log = logging.getLogger(__name__)
 
 CONFIDENCE_THRESHOLD = 0.3
-RECENT_MESSAGES = 3 * 2
+MAX_SESSIONS = 128
 
 
 def _handle_low_confidence(
@@ -42,36 +42,37 @@ def _system_prompt_by_intent(intent: str) -> str:
 
 
 class ChatService:
-    def __init__(self, api_key: str | None = None) -> None:
+    def __init__(self, api_key: str | None = None, *, max_sessions: int = MAX_SESSIONS) -> None:
+        if max_sessions < 1:
+            raise ValueError("max_sessions 必须至少为 1")
         # 初始化日志记录器
         if not logging.root.handlers:
             logging.basicConfig(level=logging.INFO)
-        # 初始化llm，需要用户传递api_key，否则从环境变量中获取api_key
-        if api_key:
-            os.environ["DASHSCOPE_API_KEY"] = api_key
-        if not os.environ.get("DASHSCOPE_API_KEY"):
-            raise ValueError("DASHSCOPE_API_KEY环境变量未设置")
+        api_key = api_key or get_api_key()
+        self.__intent_recognizer = IntentRecognizer(ChatTongyi(model=INTENT_RECOGNIZE_MODEL, dashscope_api_key=api_key))
+        self.__llm = ChatTongyi(model=TONGYI_MODEL, dashscope_api_key=api_key)
+        self.__max_sessions = max_sessions
+        self.__memory_cache: OrderedDict[tuple[str, str], Memory] = OrderedDict()
 
-        self.__intent_recognizer = IntentRecognizer(ChatTongyi(model=INTENT_RECOGNIZE_MODEL))
-        self.__llm = ChatTongyi(model=TONGYI_MODEL)
-        # 维护 Memory 对象缓存，键是chat_session_id
-        self.__memory_cache: dict[str, Memory] = {}
-
-    def __get_memory(self, chat_session_id: str) -> Memory:
-        """"""
-        if chat_session_id not in self.__memory_cache:
-            self.__memory_cache[chat_session_id] = Memory(chat_session_id)
-        return self.__memory_cache[chat_session_id]
+    def __get_memory(self, user_id: str, chat_session_id: str) -> Memory:
+        key = (user_id, chat_session_id)
+        if key in self.__memory_cache:
+            self.__memory_cache.move_to_end(key)
+        else:
+            self.__memory_cache[key] = Memory(chat_session_id)
+            if len(self.__memory_cache) > self.__max_sessions:
+                self.__memory_cache.popitem(last=False)
+        return self.__memory_cache[key]
 
     def handle(self, request: ChatRequest) -> ChatResponse:
         # 请求开始时间
         start_time = time.time()
-        memory = self.__get_memory(request.chat_session_id)
+        memory = self.__get_memory(request.user_id, request.chat_session_id)
 
         try:
             # 1.意图识别
             intent_result = self.__intent_recognizer.recognize(request.user_input,
-                                                               memory.get_recent_messages_text(RECENT_MESSAGES))
+                                                               memory.get_recent_messages_text(RECENT_WINDOW))
             # 2.低置信度时澄清需求，并保留本轮上下文
             if intent_result.confidence <= CONFIDENCE_THRESHOLD:
                 low_conf = _handle_low_confidence(intent_result, request.user_input)
@@ -94,8 +95,6 @@ class ChatService:
             ])
             # 5.记忆管理
             memory_messages = memory.prepare_memory_for_llm()
-            # if len(memory.history.get_messages()) >= 10:
-            #     print("摘要生成")
             # 6.LLM调用
             chain = prompt | self.__llm | StrOutputParser()
             answer = chain.invoke(input={"chat_history": memory_messages, "user_input": request.user_input})
